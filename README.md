@@ -50,6 +50,8 @@ bash scripts/create_env.sh        # conda 环境 rovmimic：Python 3.13 + torch 
 #   驱动不支持 CUDA 13 时：TORCH_INDEX=https://download.pytorch.org/whl/cu126 bash scripts/create_env.sh
 bash scripts/build_stonefish.sh   # conda 环境 stonefish（编译器 + C++ 库，运行时也要用，不能删）；编 Stonefish 和 sfenv
 bash scripts/fetch_alpha5_meshes.sh --i-have-reach-license   # Alpha5 网格，见下面的许可说明
+#   有打包好的数据（第 3 节）时，先解压数据包，再用包里的网格，不用联网：
+#   bash scripts/fetch_alpha5_meshes.sh --i-have-reach-license --from data/alpha5
 ```
 
 **Alpha5 网格许可**：Alpha5 的网格来自 Reach Robotics 的专有包 `alpha_description`，使用前必须已有 Reach 授权，
@@ -75,7 +77,9 @@ tar -I zstd -xf <路径>/rovmimic_data_v1.tar.zst -C .          # 在仓库根�
 sha256sum -c --quiet data/MANIFEST.sha256 && echo OK          # 逐文件核对
 ```
 
-包里有参考轨迹、USIM 低维原始数据和世界模型离线拟合结果，不含 Alpha5 网格；网格仍按第 2 步生成。
+包里有参考轨迹、USIM 低维原始数据、世界模型离线拟合结果和 Alpha5 网格（`data/alpha5`，Reach 授权文件，只限组内使用）。
+解压后按第 2 步最后一条命令（`--from data/alpha5`）把网格装到 u0env 里，脚本会按 md5 核对。
+`fetch_deps.sh` 要在这之前跑过，因为网格要装进 `third_party/u0env`。
 
 ## 4. 测试（装好后先全部跑通）
 
