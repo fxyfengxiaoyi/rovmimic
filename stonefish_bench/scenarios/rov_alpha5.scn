@@ -1,0 +1,567 @@
+<?xml version="1.0"?>
+<scenario>
+  <environment>
+    <ned latitude="0.0" longitude="0.0"/>
+    <ocean>
+      <water density="1031.0" jerlov="0.15"/>
+      <waves height="0.0"/>
+      <particles enabled="false"/>
+      <current type="uniform">
+        <velocity xyz="0.0 0.0 0.0"/>
+      </current>
+    </ocean>
+  </environment>
+  <materials>
+    <material name="Neutral" density="1000.0" restitution="0.1"/>
+    <material name="Fiberglass" density="1500.0" restitution="0.3"/>
+    <material name="Steel" density="7810.0" restitution="0.2"/>
+    <material name="Dummy" density="1000.0" restitution="0.1"/>
+    <friction_table>
+      <friction material1="Neutral" material2="Neutral" static="0.5" dynamic="0.2"/>
+    </friction_table>
+  </materials>
+  <looks>
+    <look name="black" gray="0.05" roughness="0.2"/>
+    <look name="Blue" rgb="0.0 0.3 1.0" roughness="0.3"/>
+    <look name="None" gray="0.5" roughness="0.5"/>
+  </looks>
+<looks>
+		<look name="br2" gray="1.0" roughness="0.4" metalness="0.5" texture="bluerov2/br2.png" />
+		<look name="blue" rgb="0.0 0.5 1.0" roughness="0.3" />
+
+		<look name="manipulator" rgb="0.05 0.05 0.05" roughness="1.0" metalness="0.9" />
+	</looks>
+
+	
+<robot name="bluerov2" fixed="false" self_collisions="false">
+		<base_link name="base_link" type="compound" physics="submerged">
+			<external_part name="HullBottom" type="model" physics="submerged" buoyant="false">
+				<physical>
+					<mesh filename="bluerov2/bluerov2_phy.obj" scale="1" />
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+					<thickness value="0.005" />
+				</physical>
+				<visual>
+					<mesh filename="bluerov2/bluerov2.obj" scale="1" />
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+				</visual>
+				<material name="Fiberglass" />
+				<look name="br2" />
+				<compound_transform rpy="0 0.0 0.0" xyz="-0.0 0.0 0.0" />
+			</external_part>
+
+			<external_part name="HeavyFit" type="model" physics="submerged" buoyant="false">
+				<physical>
+					<mesh filename="bluerov2/bluerov2_ring.obj" scale="1" />
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.03" />
+					<thickness value="0.005" />
+				</physical>
+				<visual>
+					<mesh filename="bluerov2/bluerov2_wings.obj" scale="1" />
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+				</visual>
+				<material name="Fiberglass" />
+				<look name="black" />
+				<compound_transform rpy="0 0.0 0.0" xyz="-0.0 0.0 0.0" />
+			</external_part>
+
+			<internal_part name="BackLeft" type="box" physics="submerged" buoyant="true">
+				<dimensions xyz="0.2 0.15 0.091" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Neutral" />
+				<look name="None" />
+				<mass value="0.025" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="-0.1 -0.1 0.0" />
+			</internal_part>
+
+			<internal_part name="BackRight" type="box" physics="submerged" buoyant="true">
+				<dimensions xyz="0.2 0.15 0.091" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Neutral" />
+				<look name="None" />
+				<mass value="0.025" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="-0.1 0.1 0.0" />
+			</internal_part>
+
+			<internal_part name="FrontLeft" type="box" physics="submerged" buoyant="true">
+				<dimensions xyz="0.2 0.15 0.091" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Neutral" />
+				<look name="None" />
+				<mass value="0.025" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.09 -0.1 0.0" />
+			</internal_part>
+
+			<internal_part name="FrontRight" type="box" physics="submerged" buoyant="true">
+				<dimensions xyz="0.2 0.15 0.091" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Neutral" />
+				<look name="None" />
+				<mass value="0.025" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.09 0.1 0.0" />
+			</internal_part>
+
+			
+
+			
+
+			
+
+			
+
+			
+			<internal_part name="BuoyCorner" type="sphere" physics="submerged" buoyant="true">
+				<dimensions radius="0.075" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Neutral" />
+				<look name="Blue" />
+				<mass value="0.25" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.2 -0.085 0.0" />
+			</internal_part>
+
+			<internal_part name="WeightCenter" type="sphere" physics="submerged" buoyant="false">
+				<dimensions radius="0.01" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Steel" />
+				<look name="black" />
+				<mass value="2.245" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.1" />
+			</internal_part>
+
+			<internal_part name="WeightLeft" type="sphere" physics="submerged" buoyant="false">
+				<dimensions radius="0.01" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Steel" />
+				<look name="black" />
+				<mass value="1" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 -0.075 0.1" />
+			</internal_part>
+
+			<internal_part name="WeightRight" type="sphere" physics="submerged" buoyant="false">
+				<dimensions radius="0.01" />
+				<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+				<material name="Steel" />
+				<look name="black" />
+				<mass value="1" />
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.075 0.1" />
+			</internal_part>
+		</base_link>
+		
+		
+		<actuator name="FrontRight" type="thruster">
+			<link name="base_link" />
+			<origin xyz="0.1355 0.1 0.0725" rpy="0 0 -0.7853981634" />
+			<specs max_setpoint="376.8" inverted_setpoint="true" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="true">
+				<mesh filename="bluerov2/ccw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+
+		
+		<actuator name="FrontLeft" type="thruster">
+			<link name="base_link" />
+			<origin xyz="0.1355 -0.1 0.0725" rpy="0 0 0.7853981634" />
+			<specs max_setpoint="376.8" inverted_setpoint="true" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="true">
+				<mesh filename="bluerov2/ccw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+
+		
+		<actuator name="BackRight" type="thruster">
+			<link name="base_link" />
+			<origin xyz="-0.1475 0.1 0.0725" rpy="0 0 -2.3561944902" />
+			<specs max_setpoint="376.8" inverted_setpoint="false" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="false">
+				<mesh filename="bluerov2/cw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+
+		
+		<actuator name="BackLeft" type="thruster">
+			<link name="base_link" />
+			<origin xyz="-0.1475 -0.1 0.0725" rpy="0 0 2.3561944902" />
+			<specs max_setpoint="376.8" inverted_setpoint="false" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="false">
+				<mesh filename="bluerov2/cw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+
+		
+		<actuator name="DiveFrontRight" type="thruster">
+			<link name="base_link" />
+			<origin xyz="0.12 0.218 0.0" rpy="0 -1.5707963268 0" />
+			<specs max_setpoint="376.8" inverted_setpoint="false" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="true">
+				<mesh filename="bluerov2/cw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+
+		
+		<actuator name="DiveFrontLeft" type="thruster">
+			<link name="base_link" />
+			<origin xyz="0.12 -0.218 0.0" rpy="0 -1.5707963268 0" />
+			<specs max_setpoint="376.8" inverted_setpoint="true" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="false">
+				<mesh filename="bluerov2/ccw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+		
+		
+		<actuator name="DiveBackRight" type="thruster">
+			<link name="base_link" />
+			<origin xyz="-0.12 0.218 0.0" rpy="0 -1.5707963268 0" />
+			<specs max_setpoint="376.8" inverted_setpoint="true" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="false">
+				<mesh filename="bluerov2/ccw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+
+		
+		<actuator name="DiveBackLeft" type="thruster">
+			<link name="base_link" />
+			<origin xyz="-0.12 -0.218 0.0" rpy="0 -1.5707963268 0" />
+			<specs max_setpoint="376.8" inverted_setpoint="false" normalized_setpoint="true" />
+		  	<rotor_dynamics type="zero_order" />
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.167" reverse="0.167" />
+				<torque_coeff value="0.016" />
+			</thrust_model>
+			<propeller diameter="0.076" right="true">
+				<mesh filename="bluerov2/cw.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="blue" />
+			</propeller>
+		</actuator>
+
+		<link name="ArmBaseLink" type="box" physics="surface">
+			<dimensions xyz="0.001 0.001 0.001" />
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.0001" />
+			<inertia xyz="0.0001 0.0001 0.0001" />
+		</link>
+
+		
+		<link name="m3_inline_link" type="model" physics="surface">
+			<physical>
+				<mesh filename="alpha5/M3-INLINE.obj" scale="1.0" />
+				<thickness value="0.005" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.341" />
+			<inertia xyz="0.0000682 0.000673 0.000673" />
+		</link>
+
+		
+		<link name="m2_1_1_link" type="model" physics="surface">
+			<physical>
+				<mesh filename="alpha5/M2-1-1.obj" scale="1.0" />
+				<thickness value="0.005" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.194" />
+			<inertia xyz="0.000037 0.000037 0.0000388" />
+		</link>
+
+		
+		<link name="m2_joint_link" type="model" physics="surface">
+			<physical>
+				<mesh filename="alpha5/M2.obj" scale="1.0" />
+				<thickness value="0.005" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.429" />
+			<inertia xyz="0.0008907 0.0008907 0.0000858" />
+		</link>
+
+		
+		<link name="m2_1_2_link" type="model" physics="surface">
+			<physical>
+				<mesh filename="alpha5/M2-1-3.obj" scale="1.0" />
+				<thickness value="0.005" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.115" />
+			<inertia xyz="0.0000219 0.0000219 0.000023" />
+		</link>
+
+		
+		<link name="m1_link" type="model" physics="surface">
+			<physical>
+				<mesh filename="alpha5/RS1-100-101-123.obj" scale="1.0" />
+				<thickness value="0.005" />
+				<origin xyz="0 0 0" rpy="0 -1.5707 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.200" />
+			<inertia xyz="0.0001867 0.0001867 0.00004" />
+		</link>
+
+		
+		<link name="ee_base_link" type="box" physics="surface">
+			<dimensions xyz="0.001 0.001 0.001" />
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.0001" />
+			<inertia xyz="0.0001 0.0001 0.0001" />
+		</link>
+
+		
+		<link name="push_rod" type="box" physics="surface">
+			<dimensions xyz="0.001 0.001 0.001" />
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.0001" />
+			<inertia xyz="0.0001 0.0001 0.0001" />
+		</link>
+
+		
+		<joint name="base_link_joint" type="fixed">
+			<parent name="ArmBaseLink" />
+			<child name="m3_inline_link" />
+			<origin xyz="0 0 0" rpy="0 0 0" />
+		</joint>
+
+		<joint name="axis_e" type="revolute">
+			<parent name="m3_inline_link" />
+			<child name="m2_1_1_link" />
+			<origin xyz="0 0 0.014" rpy="0 0 0" />
+			<axis xyz="0 0 1" />
+			<limit lower="0.0" upper="6.10" velocity="0.5" />
+		</joint>
+
+		<joint name="axis_d" type="revolute">
+			<parent name="m2_1_1_link" />
+			<child name="m2_joint_link" />
+			<origin xyz="-0.02 0 0.033" rpy="0 1.5746 0" />
+			<axis xyz="0 1 0" />
+			<limit lower="0.0" upper="3.49" velocity="0.5" />
+		</joint>
+
+		<joint name="axis_c" type="revolute">
+			<parent name="m2_joint_link" />
+			<child name="m2_1_2_link" />
+			<origin xyz="-0.04 0 -0.1453" rpy="0 0 3.14159" />
+			<axis xyz="0 1 0" />
+			<limit lower="0.0" upper="3.22" velocity="0.5" />
+		</joint>
+
+		<joint name="axis_b" type="revolute">
+			<parent name="m2_1_2_link" />
+			<child name="m1_link" />
+			<origin xyz="0.02 0 0.033" rpy="0 0 2.09439" />
+			<axis xyz="0 0 -1" />
+			<limit lower="0.0" upper="3.22" velocity="0.5" />
+		</joint>
+
+		<joint name="ee_joint" type="fixed">
+			<parent name="m1_link" />
+			<child name="ee_base_link" />
+			<origin xyz="0 0 0.09975" rpy="0 0 0" />
+		</joint>
+
+		
+		<joint name="axis_a" type="revolute">
+			<parent name="ee_base_link" />
+			<child name="push_rod" />
+			<origin xyz="0 0 0.009" rpy="0 0 0" />
+			<axis xyz="0 0 1" />
+			<limit lower="0.0" upper="0.015" velocity="10.0" />
+		</joint>
+
+        
+		<actuator name="servo_e" type="servo">
+			<controller position_gain="1.0" velocity_gain="1.0" max_torque="9.0" max_velocity="0.5" />
+			<joint name="axis_e" />
+		</actuator>
+
+		<actuator name="servo_d" type="servo">
+			<controller position_gain="1.0" velocity_gain="1.0" max_torque="9.0" max_velocity="0.5" />
+			<joint name="axis_d" />
+		</actuator>
+
+		<actuator name="servo_c" type="servo">
+			<controller position_gain="1.0" velocity_gain="1.0" max_torque="9.0" max_velocity="0.5" />
+			<joint name="axis_c" />
+		</actuator>
+
+		<actuator name="servo_b" type="servo">
+			<controller position_gain="1.0" velocity_gain="1.0" max_torque="9.0" max_velocity="0.5" />
+			<joint name="axis_b" />
+		</actuator>
+
+		<actuator name="servo_a" type="servo">
+			<controller position_gain="1.0" velocity_gain="1.0" max_torque="10.0" max_velocity="0.18" />
+			<joint name="axis_a" />
+		</actuator>
+
+		
+		<link name="EEBaseLink" type="model" physics="surface">
+			<visual>
+				<mesh filename="alpha5/robotiq/hand-e.obj" scale="0.5" />
+				<origin xyz="0 0 0" rpy="-1.57 0 0" />
+			</visual>
+			<physical>
+				<mesh filename="alpha5/robotiq/hand-e-cylinder.obj" scale="1.0" />
+				<origin xyz="0 0 0.025" rpy="-1.57 0 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.10798375" />
+			<inertia xyz="3.179875e-05 3.212628125e-05 1.53065625e-05" />
+		</link>
+		
+
+		
+		<link name="rs1_130_link" type="model" physics="surface">
+			<visual>
+				<mesh filename="alpha5/robotiq/finger_1-main.obj" scale="0.5" />
+				<origin xyz="0 0 0" rpy="-1.57 0 0" />
+			</visual>
+			<physical>
+				<mesh filename="alpha5/robotiq/finger_1-box.obj" scale="0.5" />
+				<origin xyz="0.015 0 0.015" rpy="1.57 -0.1 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.004755" />
+			<inertia xyz="4.2396875e-07 4.9325e-07 2.336875e-07" />
+		</link>
+		
+		
+
+		
+		<link name="rs1_139_link" type="model" physics="surface">
+			<visual>
+				<mesh filename="alpha5/robotiq/finger_2-main.obj" scale="0.5" />
+				<origin xyz="0 0 0" rpy="-1.57 0 0" />
+			</visual>
+			<physical>
+				<mesh filename="alpha5/robotiq/finger_2-box.obj" scale="0.5" />
+				<origin xyz="-0.015 0 0.015" rpy="1.57 0.1 0" />
+			</physical>
+			<material name="Steel" />
+			<look name="manipulator" />
+			<mass value="0.004755" />
+			<inertia xyz="4.2396875e-07 4.9325e-07 2.336875e-07" />
+		</link>
+		
+		
+
+		
+		
+
+		
+		<joint name="rs1_130_joint" type="prismatic">
+			<parent name="EEBaseLink" />
+			<child name="rs1_130_link" />
+			<origin xyz="0 0 0.0495" rpy="0 0 0" />
+			<axis xyz="-1 0 0" />
+			<limit lower="0" upper="0.0125" />
+		</joint>
+
+		<joint name="rs1_139_joint" type="prismatic">
+			<parent name="EEBaseLink" />
+			<child name="rs1_139_link" />
+			<origin xyz="0 0 0.0495" rpy="0 0 0" />
+			<axis xyz="1 0 0" />
+			<limit lower="0" upper="0.0125" />
+		</joint>
+
+		
+
+		
+		<actuator name="jaw_servo_130" type="servo">
+			<controller position_gain="1.0" velocity_gain="1.0" max_torque="10.0" max_velocity="0.15" />
+			<joint name="rs1_130_joint" />
+		</actuator>
+		
+
+		<actuator name="jaw_servo_139" type="servo">
+			<controller position_gain="1.0" velocity_gain="1.0" max_torque="10.0" max_velocity="0.15" />
+			<joint name="rs1_139_joint" />
+		</actuator>
+		
+
+		
+		<joint name="manipulator_mount_joint" type="fixed">
+			<parent name="base_link" />
+			<child name="ArmBaseLink" />
+			<origin xyz="0.196 -0.084 0.145" rpy="3.14 -1.57 0" />
+		</joint>
+
+		
+		<joint name="endeffector_mount_joint" type="fixed">
+			<parent name="ee_base_link" />
+			<child name="EEBaseLink" />
+			<origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+		</joint>
+
+		
+		<world_transform xyz="0.0 0.0 5.0" rpy="0.0 0.0 0.0" />
+		
+		</robot>
+
+</scenario>

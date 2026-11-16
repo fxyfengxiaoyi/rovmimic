@@ -1,0 +1,30 @@
+# 上游依赖：scripts/fetch_deps.sh 按固定版本拉取
+/supermimic/
+/mjlab_research/
+/third_party/
+
+# 数据、训练和评估输出：按 README 重新生成
+/data/
+/results/
+
+# 论文源码（上游，只供阅读）
+/paper/
+
+# 编译产物
+/sfenv/build*/
+/sfenv/python/*.so
+/stonefish_bench/build/
+__pycache__/
+*.pyc
+
+# 日志
+*.log
+wandb/
+
+# Alpha5 网格及其源文件受 Reach Robotics 许可约束，任何时候都不进仓库
+**/alpha_description/
+**/alpha5/
+*.stl
+*.STL
+*.obj
+*.dae

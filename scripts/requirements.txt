@@ -1,0 +1,14 @@
+# rovmimic 环境在 mjlab_research / supermimic（pip install -e）之外还需要的包。
+# 版本下限按开发机（2026-11-16）实测可用的版本；完整的版本快照见 requirements-lock.txt。
+tyro>=1.0
+wandb>=0.31
+tensordict>=0.15
+numpy>=2.0
+pandas>=2.2          # 读 USIM parquet
+pyarrow>=17
+huggingface_hub>=0.30  # 下载 USIM
+matplotlib>=3.9      # tools/visualize_eval.py
+imageio-ffmpeg>=0.5  # 系统没有 ffmpeg 时给 matplotlib 用
+trimesh>=4.0         # u0env 的 Alpha5 网格转换脚本
+onnx>=1.17           # rovmimic/policy.py export --onnx
+pybind11>=2.13       # 编译 sfenv
