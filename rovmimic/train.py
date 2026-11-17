@@ -54,4 +54,6 @@ def main(cfg: TrainConfig) -> None:
 
 
 if __name__ == "__main__":
+  # 重定向到文件时 stdout 默认按块缓冲，日志会滞后几块；-I 又会忽略 PYTHONUNBUFFERED，所以在这里改成按行写
+  sys.stdout.reconfigure(line_buffering=True)
   main(tyro.cli(TrainConfig))
