@@ -49,6 +49,7 @@ bash scripts/fetch_deps.sh        # 按固定版本拉 supermimic、mjlab_resear
 bash scripts/create_env.sh        # conda 环境 rovmimic：Python 3.13 + torch 2.14.1 + 上游包 + scripts/requirements.txt
 #   驱动不支持 CUDA 13 时：TORCH_INDEX=https://download.pytorch.org/whl/cu126 bash scripts/create_env.sh
 bash scripts/build_stonefish.sh   # conda 环境 stonefish（编译器 + C++ 库，运行时也要用，不能删）；编 Stonefish 和 sfenv
+#   系统 libstdc++ 较旧时（如 Ubuntu 22.04）它会自动给 rovmimic 环境设 LD_PRELOAD，见脚本末尾；之后要重新 conda activate
 bash scripts/fetch_alpha5_meshes.sh --i-have-reach-license   # Alpha5 网格，见下面的许可说明
 #   有打包好的数据（第 3 节）时，先解压数据包，再用包里的网格，不用联网：
 #   bash scripts/fetch_alpha5_meshes.sh --i-have-reach-license --from data/alpha5

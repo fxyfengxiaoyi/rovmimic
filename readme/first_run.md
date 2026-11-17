@@ -154,6 +154,7 @@ python -I rovmimic/policy.py export $F --onnx
 | 想象回报涨、真实回报不涨 | 策略在利用世界模型的误差 | 汇报 `Loss/*` 和 `Termination/*` 曲线；可以试降学习率：`--runner.wm.lr 1e-4 runner.policy:actor-critic --runner.policy.lr 1e-4` |
 | `hull` 失败占多数 | 机械臂撞艇体 | 汇报 `Reward/hull`、`Termination/hull` 曲线和几段视频 |
 | 训练中断 | — | 不能续跑，只能重新开始 |
+| `import sfenv` 报 `GLIBCXX_3.4.xx not found` | 系统 libstdc++ 太旧（如 Ubuntu 22.04），torch 先加载了它 | 重跑 `scripts/build_stonefish.sh`，它会检测并给 rovmimic 环境设 `LD_PRELOAD`；之后重新 `conda activate rovmimic` |
 
 命令行注意：
 - 改策略学习器的参数，必须写出子命令 `runner.policy:actor-critic`，放在其他参数之后。

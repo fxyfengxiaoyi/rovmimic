@@ -39,4 +39,20 @@ cmake -S "$ROOT/sfenv" -B "$ROOT/sfenv/build313" -DCMAKE_BUILD_TYPE=Release \
   -DPython3_EXECUTABLE="$PY" -DPython3_FIND_STRATEGY=LOCATION
 cmake --build "$ROOT/sfenv/build313" -- -j"$JOBS" "${MAKE_ARGS[@]}"
 ls -l "$ROOT"/sfenv/python/sfenv.cpython-313-*.so
+
+# 按训练脚本的顺序（先 torch 后 sfenv）在训练环境里导入一次。
+# 系统 libstdc++ 较旧时（如 Ubuntu 22.04，只到 GLIBCXX_3.4.30），torch 会先加载系统的那份，sfenv 随后报
+# "GLIBCXX_3.4.xx not found"：sfenv 的 RPATH 指向 stonefish 环境，但同名库已加载就不会再找。
+# 这时给训练环境设 LD_PRELOAD，改用 stonefish 环境里较新的 libstdc++（向后兼容；仿真子进程会继承）。
+check_import() {
+  conda run -n "$TRAIN_ENV" python -I -c "import sys; sys.path.insert(0, '$ROOT/sfenv/python'); import torch, sfenv" 2>&1
+}
+if ! out=$(check_import); then
+  if ! grep -q GLIBCXX <<< "$out"; then echo "$out"; echo "[ERROR] $TRAIN_ENV 环境里 import sfenv 失败"; exit 1; fi
+  echo "=== 系统 libstdc++ 太旧，给 $TRAIN_ENV 环境设置 LD_PRELOAD=$SF_ENV/lib/libstdc++.so.6"
+  conda env config vars set -n "$TRAIN_ENV" LD_PRELOAD="$SF_ENV/lib/libstdc++.so.6" > /dev/null
+  if ! out=$(check_import); then echo "$out"; echo "[ERROR] 设置 LD_PRELOAD 后仍然无法 import sfenv"; exit 1; fi
+  echo "    已写入环境配置，conda activate $TRAIN_ENV 后生效（已激活的终端要重新激活）"
+fi
+echo "[ok] $TRAIN_ENV 环境里 import torch, sfenv 正常"
 echo "[ok] 下一步：bash scripts/fetch_alpha5_meshes.sh --i-have-reach-license，然后跑 README 里的测试"
